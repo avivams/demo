@@ -1,20 +1,23 @@
 const express = require('express');
-const api_v1 = require('./api/v1');
-const api_v2 = require('./api/v2');
 const app = express();
-const port = 3000;
+
+const AWSXRay = require('aws-xray-sdk');
+const XRayExpress = require('aws-xray-sdk-express');
+AWSXRay.captureHTTPsGlobal(require('https'));
+
+const AWS = AWSXRay.captureAWS(require('aws-sdk'));
+AWS.config.update({ region: 'us-east-1' });
 
 const winston = require('winston');
 const WinstonCloudWatch = require('winston-cloudwatch');
-const AWS = require('aws-sdk');
-AWS.config.update({ region: 'us-east-1' });
+const api_v1 = require('./api/v1');
+const port = 3000;
 
 const getInstanceId = async () => {
   return new Promise((resolve, _) => {
-    new AWS.MetadataService().request('/latest/meta-data/instance-id', (_, id) => {
+    (new AWS.MetadataService()).request('/latest/meta-data/instance-id', (_, id) => {
       resolve(id || "unknown-instance");
     });
-    
   });
 };
 
@@ -39,9 +42,12 @@ async function main() {
     res.status(500).send('Internal Server Error');
   });
 
-  // versioning here only to show concept - no actual difference between them
+  app.use(XRayExpress.openSegment('test-site'));
+
+  // versioning
   app.use('/api/v1', api_v1);
-  app.use('/api/v2', api_v2);
+
+  app.use(XRayExpress.closeSegment());
 
   app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);

@@ -1,0 +1,38 @@
+# Node modules
+node_modules/
+
+# Log files
+logs/
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Build output
+dist/
+build/
+
+# Docker
+docker-compose.override.yml
+
+# Dependency directories
+jspm_packages/
+
+# Coverage directory for testing
+coverage/
+
+# IDEs and Editors
+.vscode/
+.idea/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.tgz
+
+# Miscellaneous
+*.swp
+*.swo
