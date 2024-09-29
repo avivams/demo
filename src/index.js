@@ -10,12 +10,12 @@ const AWS = require('aws-sdk');
 AWS.config.update({ region: 'us-east-1' });
 
 const getInstanceId = async () => {
-  try {
-      const response = await new AWS.MetadataService().request('/latest/meta-data/instance-id');
-      return response;
-  } catch (err) {
-      return 'unknown-instance';
-  }
+  return new Promise((resolve, _) => {
+    new AWS.MetadataService().request('/latest/meta-data/instance-id', (_, id) => {
+      resolve(id || "unknown-instance");
+    });
+    
+  });
 };
 
 async function main() {
