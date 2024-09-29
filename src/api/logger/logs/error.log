@@ -1,0 +1,27 @@
+2024-09-08T08:34:12.203Z - ERROR: undefined
+2024-09-08T08:37:18.748Z - ERROR: undefined
+2024-09-08T08:42:14.165Z - ERROR: undefined
+2024-09-08T08:51:14.760Z - ERROR: undefined
+2024-09-08T08:54:08.450Z - ERROR: undefined
+2024-09-08T08:54:32.748Z - ERROR: Employee not found
+2024-09-08T08:58:36.056Z - ERROR: undefined
+2024-09-08T08:58:53.947Z - ERROR: undefined
+2024-09-08T08:59:05.760Z - ERROR: undefined
+2024-09-08T09:18:37.710Z - ERROR: Failed to update employees - Failed IDs: 6, 7
+2024-09-08T09:19:14.803Z - ERROR: Failed to update employees - Failed IDs: 6, 7
+2024-09-08T09:21:15.539Z - ERROR: Failed to update employees - Failed IDs: 6, 7
+2024-09-08T09:21:31.118Z - ERROR: Failed to update employees - Failed IDs: 6, 7
+2024-09-08T09:24:20.914Z - ERROR: Failed to update employees - Failed IDs: 6, 7
+2024-09-08T09:27:41.442Z - ERROR: Failed to update employees - Failed IDs: 6, 7
+2024-09-08T09:28:12.613Z - ERROR: Failed to update employees - Failed IDs: 1, 7
+2024-09-08T09:28:19.888Z - ERROR: Failed to update employees - Failed IDs: 1, 7
+2024-09-08T09:34:34.034Z - ERROR: Employee not found
+2024-09-08T09:34:39.422Z - ERROR: Employee not found
+2024-09-08T09:35:36.610Z - ERROR: Employee not found
+2024-09-08T09:35:57.167Z - ERROR: Employee not found
+2024-09-08T09:38:15.235Z - ERROR: Invalid input: must be a non-empty array
+2024-09-08T09:38:25.009Z - ERROR: Invalid input: must be a non-empty array
+2024-09-08T09:53:15.431Z - ERROR: Internal server error
+2024-09-08T09:53:17.074Z - ERROR: Internal server error
+2024-09-08T09:55:07.167Z - ERROR: Duplicate name
+2024-09-08T09:55:08.284Z - ERROR: Duplicate name
