@@ -81,17 +81,18 @@ router.get('/employees/:id', async (req, res) => {
     const segment = AWSXRay.getSegment();
     const sub = segment.addNewSubsegment("http:get-employee");
 
-    AWSXRay.express.openSegment('DB');
-    await new Promise(resolve => {
-        setTimeout(() => {
-            AWSXRay.captureAsyncFunc('db-get-employee', async function (subsegment) {
-                subsegment.close();
-                resolve();
-            }, segment);
-        }, 200);
-    });
-    AWSXRay.express.closeSegment('DB');
-    
+    const sendService = {
+        send: () => new Promise(resolve => {
+            setTimeout(() => {
+                AWSXRay.captureAsyncFunc('db-get-employee', async function (subsegment) {
+                    subsegment.close();
+                    resolve();
+                });
+            }, 200);
+        })
+    }
+    AWSXRay.captureAWSClient(sendService);
+    await sendService.send();
 
     try {
         const employee = await DBServiceLike.getEmployeeById(parseInt(req.params.id));
