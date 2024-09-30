@@ -42,12 +42,12 @@ async function main() {
     res.status(500).send('Internal Server Error');
   });
 
-  app.use(XRayExpress.openSegment('test-site'));
+  app.use(AWSXRay.express.openSegment('test-site'));
 
   // versioning
   app.use('/api/v1', api_v1);
 
-  app.use(XRayExpress.closeSegment());
+  app.use(AWSXRay.express.closeSegment());
 
   app.listen(port, () => {
     console.log(`Listening at http://localhost:${port}`);
