@@ -80,9 +80,14 @@ router.get('/employees', async (req, res) => {
 router.get('/employees/:id', async (req, res) => {
     const segment = AWSXRay.getSegment();
     const sub = segment.addNewSubsegment("http:get-employee");
-    AWSXRay.captureAsyncFunc('db-get', async function (subsegment) {
-        await new Promise(resolve => setTimeout(resolve, 200));
-        subsegment.close();
+
+    await new Promise(resolve => {
+        setTimeout(() => {
+            AWSXRay.captureAsyncFunc('db-get', async function (subsegment) {
+                subsegment.close();
+                resolve();
+            });
+        }, 200);
     });
 
     try {
