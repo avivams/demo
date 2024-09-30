@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 
 const AWSXRay = require('aws-xray-sdk');
-const XRayExpress = require('aws-xray-sdk-express');
 AWSXRay.captureHTTPsGlobal(require('https'));
 
 const AWS = AWSXRay.captureAWS(require('aws-sdk'));

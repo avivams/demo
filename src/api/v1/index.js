@@ -3,7 +3,7 @@ const DBServiceLike = require('../../db');
 const { ERRORS, SUCCESS_MESSAGES } = require('../../constants');
 const { logError, logSuccess } = require('../logger');
 const { isNonEmptyArray } = require('../../utils');
-const AWSXRay = require('aws-xray-sdk-core');
+const AWSXRay = require('aws-xray-sdk');
 
 const router = express.Router();
 
@@ -81,6 +81,7 @@ router.get('/employees/:id', async (req, res) => {
     const segment = AWSXRay.getSegment();
     const sub = segment.addNewSubsegment("http:get-employee");
 
+    // AWSXRay.express.openSegment('test-site');
     await new Promise(resolve => {
         setTimeout(() => {
             AWSXRay.captureAsyncFunc('db-get', async function (subsegment) {
@@ -89,6 +90,7 @@ router.get('/employees/:id', async (req, res) => {
             }, segment);
         }, 200);
     });
+    
 
     try {
         const employee = await DBServiceLike.getEmployeeById(parseInt(req.params.id));
