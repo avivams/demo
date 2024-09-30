@@ -79,8 +79,7 @@ router.get('/employees', async (req, res) => {
 // get employee by id
 router.get('/employees/:id', async (req, res) => {
     const segment = AWSXRay.getSegment();
-    segment.addAnnotation('api', 'employees');
-    const sub = segment.addNewSubsegment('GET/employees/'+req?.params?.id);
+    const sub = segment.setUser(userId);
     try {
         const employee = await DBServiceLike.getEmployeeById(parseInt(req.params.id));
         sendResponse(res, 200, undefined, employee);
