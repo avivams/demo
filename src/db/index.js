@@ -120,26 +120,6 @@ class DBServiceLike {
         this.employees.delete(id);
     }
 
-    async deleteEmployees(ids) {
-        const { idsSchema } = DBServiceLike.getSchemas();
-        const { error } = idsSchema.validate(ids);
-        if (error) throw new Error(ERRORS.INVALID_INPUT);
-
-        const deletedEmployees = [];
-        const failedDeletes = [];
-
-        for (const id of ids) {
-            try {
-                await this.deleteEmployee(id);
-                deletedEmployees.push(id);
-            } catch (err) {
-                failedDeletes.push({ id, error: err.message });
-            }
-        }
-
-        return { deletedEmployees, failedDeletes };
-    }
-
     validateDupEmployee(name) {
         if (this.hasEmployeeByName(name)) 
             throw new Error(ERRORS.DUPLICATE_NAME);
