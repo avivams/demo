@@ -86,7 +86,7 @@ router.get('/employees/:id', async (req, res) => {
             AWSXRay.captureAsyncFunc('db-get', async function (subsegment) {
                 subsegment.close();
                 resolve();
-            });
+            }, segment);
         }, 200);
     });
 
