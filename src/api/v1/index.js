@@ -78,9 +78,9 @@ router.get('/employees', async (req, res) => {
 
 // get employee by id
 router.get('/employees/:id', async (req, res) => {
-    var segment = AWSXRay.getSegment();
+    const segment = AWSXRay.getSegment();
     segment.addAnnotation('api', 'employees');
-    
+    const sub = segment.addNewSubsegment('GET/employees/'+req?.params?.id);
     try {
         const employee = await DBServiceLike.getEmployeeById(parseInt(req.params.id));
         sendResponse(res, 200, undefined, employee);
@@ -89,6 +89,7 @@ router.get('/employees/:id', async (req, res) => {
             sendResponse(res, 404, ERRORS.EMPLOYEE_NOT_FOUND, { error: ERRORS.EMPLOYEE_NOT_FOUND });
         else sendResponse(res, 500, ERRORS.INTERNAL_SERVER_ERROR, { error: ERRORS.INTERNAL_SERVER_ERROR });
     }
+    sub.close();
 });
 
 // get employee by ids
@@ -137,10 +138,11 @@ router.put('/employees/:id', async (req, res) => {
     }
 });
 
-
-
 // delete employee
 router.delete('/employees/:id', async (req, res) => {
+    const segment = AWSXRay.getSegment();
+    segment.addAnnotation('api', 'employees');
+    const sub = segment.addNewSubsegment('DELETE/employees/'+req?.params?.id);
     try {
         await DBServiceLike.deleteEmployee(parseInt(req.params.id));
         sendResponse(res, 204, `${SUCCESS_MESSAGES.EMPLOYEE_DELETED} - ID: ${req.params.id}`, {});
@@ -149,6 +151,7 @@ router.delete('/employees/:id', async (req, res) => {
             sendResponse(res, 404, error.message, { error: error.message });
         else sendResponse(res, 500, ERRORS.INTERNAL_SERVER_ERROR, { error: ERRORS.INTERNAL_SERVER_ERROR });
     }
+    sub.close();
 });
 
 // delete bulk employees
