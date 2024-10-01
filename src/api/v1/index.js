@@ -56,3 +56,5 @@ router.delete('/employees/:id', async (req, res) => {
 
     sub.close();
 });
+
+module.exports = router;
